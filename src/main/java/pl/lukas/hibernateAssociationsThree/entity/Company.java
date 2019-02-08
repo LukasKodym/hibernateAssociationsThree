@@ -2,6 +2,7 @@ package pl.lukas.hibernateAssociationsThree.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,9 +22,9 @@ public class Company {
     @OneToOne(cascade = CascadeType.ALL) // PERSIST - zapis, REMOVE - usuwanie
     @JoinColumn(name = "id_company_detail")
     private CompanyDetail companyDetail;
-    @OneToMany(mappedBy = "company", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @OneToMany(mappedBy = "company", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Property> properties;
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Department> departments;
 
     public Company() {
@@ -74,8 +75,23 @@ public class Company {
         this.properties = properties;
     }
 
-    public void addProperty(Property property){
-        if (properties == null){
+    public Set<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(Set<Department> departments) {
+        this.departments = departments;
+    }
+
+    public void addDepartment(Department department){
+        if(departments == null){
+            departments = new HashSet<>();
+        }
+        departments.add(department);
+    }
+
+    public void addProperty(Property property) {
+        if (properties == null) {
             properties = new ArrayList<>();
         }
         properties.add(property);
