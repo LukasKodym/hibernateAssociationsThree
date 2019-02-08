@@ -23,7 +23,7 @@ public class Company {
     private CompanyDetail companyDetail;
     @OneToMany(mappedBy = "company", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     private List<Property> properties;
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Department> departments;
 
     public Company() {
